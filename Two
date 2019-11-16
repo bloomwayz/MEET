@@ -1,0 +1,210 @@
+float r1=0;
+float r2=0;
+float r3=0;
+int d=0;
+int e=0;
+int f=0;
+int g=0;
+int a1;
+int a2;
+int score=0;
+boolean text1=false;
+boolean text2=false;
+String text3="y=";
+
+class lv1
+{  
+  lv1()
+  {
+  }
+
+  void set()
+  {
+    stroke(255);
+    background(0);
+    ellipseMode(CENTER);
+    line(0, height/2, width, height/2);
+    line(width/2-150, 0, width/2-150, height);
+    line(100, height/2+10, 100, height/2-10);
+    line(200, height/2+10, 200, height/2-10);
+    line(300, height/2+10, 300, height/2-10);
+    line(400, height/2+10, 400, height/2-10);
+    line(600, height/2+10, 600, height/2-10);
+    line(700, height/2+10, 700, height/2-10);
+    line(800, height/2+10, 800, height/2-10);
+    line(900, height/2+10, 900, height/2-10);
+
+    line(width/2-10-150, 100, width/2+10-150, 100);
+    line(width/2-10-150, 200, width/2+10-150, 200);
+    line(width/2-10-150, 300, width/2+10-150, 300);
+    line(width/2-10-150, 500, width/2+10-150, 500);
+    line(width/2-10-150, 600, width/2+10-150, 600);
+    line(width/2-10-150, 700, width/2+10-150, 700);
+    line(width/2-10-150, 800, width/2+10-150, 800);
+    fill(30);
+    textAlign(CENTER, CENTER);
+    noStroke();
+    rectMode(CORNER);
+    rect(1000, 0, 300, height);
+    stroke(255);
+    line(1000, 0, 1000, height);
+    fill(255);
+  }
+
+  void draw()
+  {
+    if (ti==0)
+    {
+      startTime = millis() + 30000;
+      ti=1;
+    }
+    fill(255);
+    textAlign(CORNER, CENTER);
+    text(text3, 1020, 40);
+    text("score : " + score, 1020, 760);
+    if (text1==true)
+    {
+      if (a1-48!=1 && a1-48!=-1 && a1-48!=0)
+        text3 = "y=" + (a1-48) + "x";
+      else if (a1-48==1)
+        text3 = "y=x";
+      else if (a1-48==-1)
+        text3 = "y=-x";
+      else
+        text3 = "y=";
+      text(text3, 1020, 40);
+    }
+    if (text2==true)
+    {
+      if (a2-48>=0)
+      {
+        if (a1-48!=0)
+          text3 = text3 + "+" + (a2-48);
+        else
+          text3 = text3 + (a2-48);
+      } else if (a2-48<0)
+        text3 = text3 + (a2-48);
+      text(text3, 1020, 40);
+    }
+    noStroke();
+    fill(random(255), random(255), random(255));
+    if (d==0)
+    {
+      r1=int(random(-6, 6));
+      if (r1==0)
+      {
+        while (r1==0)
+          r1=int(random(-6, 6));
+      }
+      r2=int(random(-5, 5));
+      r3=int(random(-4, 4));
+      d=1;
+    }
+    if (d!=-1)
+      graph1();
+    if (e==2)
+    {
+      float discriminant = 4*(a1-48)*r1*r2+(a1-48)*(a1-48)-4*r1*r3+4*r1*(a2-48);
+      graph2();
+      g=1;
+      e=0;
+      d=0;
+      if (discriminant > 0)
+      {
+        score=score+2;
+      } else if (discriminant==0)
+      {
+        score=score+3;
+      } else if (discriminant<0)
+      {
+        score=score-2;
+      }
+    }
+    if (g==1 && d!=-1);
+    graph1();
+    seconds = (startTime - millis())/1000;
+    if (seconds<0)
+    {
+      d=-1;
+      e=-1;
+      f=-1;
+      text1=false;
+      text2=false;
+      background(0);
+      fill(255);
+      textSize(100);
+      textAlign(CENTER, CENTER);
+      text("Game Over", width/2, height/2-50);
+      textSize(30);
+      text("Score : " + score, width/2, height/2+50);
+    } else
+    {
+      if (d!=-1)
+      {
+        fill(255, 255, 0);
+        textAlign(CORNER, CENTER);
+        text(seconds, 1010, 110);
+      }
+    }
+  }
+
+  void keyPressed()
+  {
+    if (e==0)
+    {
+      text2=false;
+      if (key=='-')
+      {
+        f=1;
+      }
+      if (f==0 && key!='-')
+      {
+        a1=int(key);
+        e=1;
+        text1=true;
+      } else if (f==1 && key!='-')
+      {
+        a1=int(key) * -1 + 96;
+        e=1;
+        f=0;
+        text1=true;
+      }
+    } else if (e==1)
+    {
+      if (key=='-')
+      {
+        f=1;
+      }
+      if (f==0 && key!='-')
+      {
+        a2=int(key); 
+        e=2;
+        text2=true;
+      } else if (f==1 && key!='-')
+      {
+        a2=int(key) * -1 + 96;
+        e=2;
+        f=0;
+        text2=true;
+      }
+    }
+  }
+
+  void graph1()
+  { 
+    fill(random(255), random(255), random(255));
+    for (float i=0; i<=1000; i=i+0.1)
+    {
+      ellipse(i, 400-(r1*0.01*(i-500-r2*100)*(i-500-r2*100)+r3*100), 2, 2);
+    }
+  }
+
+  void graph2()
+  {
+    fill(255);
+    for (float i=0; i<=1000; i=i+0.1)
+    {
+      ellipse(i, 400-((a1-48)*(i-500)+(a2-48)*100), 2, 2);
+    }
+  }
+}
