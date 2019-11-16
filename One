@@ -1,0 +1,131 @@
+lv1 mylv1 = new lv1();
+
+int level = 0;
+int levelchange=1;
+int fade=0;
+boolean fadein=false;
+boolean fadeout=false;
+int a=0;
+int ti=0;
+int qw=0;
+float seconds, startTime;
+PFont myfont;
+
+void setup()
+{
+  size(1300, 800);
+  background(0);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  myfont = createFont("나눔스퀘어", 400);
+  textFont(myfont);
+  rectMode(CENTER);
+  ellipseMode(CENTER);
+}
+
+
+
+void draw()
+{
+  if (fadein==true)
+  {
+    if (fade>40)
+    {
+      fade=0;
+      fadein=false;
+      fadeout=true;
+      level=level+levelchange;
+    }
+    fill(255, 10);
+    fade++;
+    rect(width/2, height/2, width, height);
+  }
+  if(qw==0)
+  {
+    textSize(400);
+    fill(random(255), random(255), random(255), 30);
+    text("MEET", width/2, height/2-100);
+    fill(255);
+    textSize(30);
+  }
+
+  if (level==0)
+    opening();
+  if (level!=0)
+    setting();
+  if (level==1) {
+    
+    if (fadeout==false) {
+      mylv1.set();
+      mylv1.draw();
+    }
+  }
+}
+
+void keyPressed()
+{
+  mylv1.keyPressed();
+}
+
+void opening()
+{
+  if (fadein==false) {
+    fill(255);
+    rectMode(CENTER);
+    rect(width/2, 650, 150, 70);
+    fill(0);
+    textSize(33);
+    text("START", width/2,647);
+    if (mouseX>width/2-75 && mouseX<width/2+75 && mouseY<650+35 && mouseY>650-35)
+    {
+      fill(150);
+      rect(width/2, 650, 150, 70);
+      if (mousePressed)
+      {
+        fadein=true;
+        qw=1;
+      }
+    }
+  }
+}
+
+
+void setting()
+{
+  if (fadeout==true)
+  {
+    if (fade>40)
+    {
+      fade=0;
+      fadeout=false;
+    } else {
+      fill(0, 30);
+      fade++;
+      rect(width/2, height/2, width, height);
+    }
+  } else {
+    background(200);
+    stroke(225);
+    fill(0);
+    for (int i=50; i<=1000; i=i+50)
+    {
+      line(i, 0, i, height);
+    }
+    for (int i=50; i<=800; i=i+50)
+    {
+      line(0, i, width, i);
+    }
+    noStroke();
+    rect(width/2, 25, width, 50);
+    rect(width/2, 775, width, 50);
+    rect(25, height/2, 50, height);
+    rect(975, height/2, 50, height);
+    fill(25);
+    rect(1150, height/2, 300, height);
+    stroke(200);
+    line(1000, 0, 1000, height);
+
+    fill(255);
+    textSize(30);
+  }
+}
